@@ -5,5 +5,5 @@
 <br>
 https://github.com/Homebrew/homebrew-versions<br>
 
-brew install <formula>.
+brew install <formula>.<br>
 brew install https://raw.githubusercontent.com/Homebrew/homebrew-versions/master/<formula>.rb
