@@ -5,6 +5,5 @@
 <br>
 https://github.com/Homebrew/homebrew-versions<br>
 
-brew tap homebrew/versions
 brew install <formula>.
 brew install https://raw.githubusercontent.com/Homebrew/homebrew-versions/master/<formula>.rb
