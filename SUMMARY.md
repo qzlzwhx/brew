@@ -3,5 +3,5 @@
 * [Introduction](README.md)
 * [brew](brew.md)
 * [mysql](mysql.md)
-* python
+* [python](python.md)
 
