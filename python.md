@@ -2,7 +2,7 @@
 
 1.将装饰器定义成类的一部分。
 from functools import wraps
-
+```
 class A:
     # Decorator as an instance method
     def decorator1(self, func):
@@ -20,6 +20,8 @@ class A:
             print('Decorator 2')
             return func(*args, **kwargs)
         return wrapper
+```
+
         
         
         
