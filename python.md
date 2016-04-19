@@ -22,7 +22,7 @@ class A:
         return wrapper
 ```
 
-如上使用方法
+如上使用方法A().decorator1, A.decorator2
         
         
         
