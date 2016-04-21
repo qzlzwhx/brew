@@ -8,7 +8,8 @@ class Singleton(type):
     super.__init(*args, **kargs)
   def __call__(self, *args, **kargs):
     if self.instance is None:
-      return super.__call__(*args, **kargs)
+      self.__instance = super.__call__(*args, **kargs)
+      return self.__instance
     else:
       return self.__instance
 python2
@@ -19,3 +20,8 @@ class Spam(metaclass=Singleton):
   pass
 ```
 
+## python 私有变量
+```
+python并没有私有变量，只是我们通俗上用_来表示私有变量，实际上他并不是静态语言上的私有变量；
+__表示不可被子类继承的变量（比如上边的单例模式）
+```
