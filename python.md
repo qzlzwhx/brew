@@ -33,3 +33,12 @@ __表示不可被子类继承的变量（比如上边的单例模式）
 python2的super使用的时候必须需要2个参数（继承父类， self)
 python3的super已经默认这么处理，直接super()即可
 ```
+
+## python 的__prepare__ __new__ __init__ 
+python的__prepare__是python3新加的python2并没有这个方法，这个方法在__new__之前执行，返回的是存放类属性的字典，也就是说返回的必须是字典。
+__new__在class初始化之前被调用，参数（cls, name, parent, attrs)从字面上理解是调用__new__方法的类，想要看详细解释请看文章：
+python
+
+
+
+
