@@ -39,5 +39,50 @@ python的__prepare__是python3新加的python2并没有这个方法，这个方�
 __new__在class初始化之前被调用，参数（cls, name, parent, attrs)从字面上理解是调用__new__方法的类，
 
 
+## python的__new__
+python2和python3在重载写__new__方法的时候调用super方式：
+经典列子：
+```
+*args和**kwargs的强制参数签名
+可以通过使用自定义元类来创建签名对象
+from inspect import Signature, Parameter
+
+def make_sig(*names):
+    parms = [Parameter(name, Parameter.POSITIONAL_OR_KEYWORD)
+            for name in names]
+    # 抓住这些参数
+    return Signature(parms)
+
+class StructureMeta(type):
+    def __new__(cls, clsname, bases, clsdict):
+        # 元类重载__new__方法，clsdict即当前类的属性，
+        # clsdict['__signature__']给当前类增加__signature__属性(通过元类默认添加)， 属性值是什么？
+        # *clsdict.get('_fields',[])从clsdict拿_fields属性的只，_fields是以StructureMeta为元类的类的属性
+        # 
+        clsdict['__signature__'] = make_sig(*clsdict.get('_fields',[]))
+        return super().__new__(cls, clsname, bases, clsdict)
+
+class Structure(metaclass=StructureMeta):
+    _fields = []
+    def __init__(self, *args, **kwargs):
+        bound_values = self.__signature__.bind(*args, **kwargs)
+        for name, value in bound_values.arguments.items():
+            setattr(self, name, value)
+
+# Example
+class Stock(Structure):
+    _fields = ['name', 'shares', 'price']
+
+class Point(Structure):
+    _fields = ['x', 'y']
+```
+
+
+## python的 super
+python2 和python3的区别有：
+调用方式，python2
+super(当前类名， cls[一般是self,但是在__new__方法内调用super的时候就是需要__new__的第一个参数当前类对象])
+python3
+不需要任何参数，直接super()即可。
 
 
