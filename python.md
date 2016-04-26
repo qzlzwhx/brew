@@ -85,4 +85,69 @@ super(当前类名， cls[一般是self,但是在__new__方法内调用super的�
 python3
 不需要任何参数，直接super()即可。
 
+## python 避免重复定义属性方法
+此方法用到了python的property装饰器，如果想将一个方法变成类对象的属性，那么需要是新式类，python3默认都是新式类。
+```
+如果出现很多如下重复的代码，那么我可能需要重构一下代码了
+class Person:
+    def __init__(self, name ,age):
+        self.name = name
+        self.age = age
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        if not isinstance(value, str):
+            raise TypeError('name must be a string')
+        self._name = value
+
+    @property
+    def age(self):
+        return self._age
+
+    @age.setter
+    def age(self, value):
+        if not isinstance(value, int):
+            raise TypeError('age must be an int')
+        self._age = value
+        
+```
+写一个方法：
+```
+def type_property(name, expected_type):
+  storage_name = '_' + name
+  @property
+  def prop(self):
+    return self.getattr(storage_name)
+  @prop.setter
+  def prop(self, value):
+    if not isinstance(value, expected_type):
+      raise TypeError('Argument{} must be {} type'.format(storage_name, expected_type))
+    setattr(self, storage_name, value)
+  return prop
+# python2必须是新式类才可以
+class Person(object):
+  name = type_property('name', str)
+  age = type_property('age', int)
+  def __init__(self, name, age):
+    self.name = name
+    self.age = age
+# 还可以进一步简略代码，使用functools的partial
+String = functools.partial(type_property, expected_type=str)
+Integer = functools.partial(type_property, expected_type=int)
+class Person(object):
+  name = String('name')
+  age = Integer('age')
+  def __init__(self, name, age):
+    self.name = name
+    self.age = age
+```
+
+
+
+
+
 
