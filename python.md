@@ -145,7 +145,9 @@ class Person(object):
     self.name = name
     self.age = age
 ```
-
+## python urllib于world wide web 通信的模块
+python3已经将python2的urllib拆成urllib.request, urllib.parse,urllib.error另外python3删除了urllib中的urlopen，
+而是等价于urllib2中的urlopen.
 
 
 
